@@ -1,3 +1,4 @@
+require("config")
 -- Basic settings
 vim.opt.number = true
 vim.opt.relativenumber = true
