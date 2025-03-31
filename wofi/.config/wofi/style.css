@@ -3,7 +3,7 @@
 @define-color txt #D3C6AA;
 @define-color bg #2B3339;
 @define-color bg2 #333C43;
-
+@define-color border #D699B6;
  * {
     font-family: 'CaskaydiaCove Nerd Font mono';
     font-size: 14px;
@@ -13,8 +13,8 @@
  window {
     margin: 0px;
     padding: 10px;
-    border: 3px solid @accent;
-    border-radius: 7px;
+    border: 3px solid @border;
+    border-radius: 0px;
     background-color: @bg;
     animation: slideIn 0.5s ease-in-out both;
  }

@@ -25,7 +25,7 @@
             "escape": true
         },
         "clock": {
-            "format": "{:%H:%M:%S}",
+            "format": "{:%H:%M}",
             "interval": 1, 
             "tooltip": false,
             "format-alt": "{:%d.%m.%Y}",

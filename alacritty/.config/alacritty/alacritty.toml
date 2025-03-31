@@ -28,4 +28,4 @@ cyan = '#83c092'
 white = '#d3c6aa'
 
 [window]
-  padding = { x = 20, y = 20}
+  padding = { x = 10, y = 10}
