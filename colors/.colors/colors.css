@@ -1,6 +1,12 @@
 @define-color foreground #c1cfc7;
-@define-color background #1e2d28;
+@define-color background #2D353B;
 @define-color cursor #c1cfc7;
+
+@define-color activeGreen #A7C080;
+@define-color passiveGreen #1e2d28;
+@define-color pink #D699B6;
+@define-color text0 #1e2d28;
+@define-color text0 #1e2d28;
 
 @define-color color0 #1e2d28;
 @define-color color1 #96A15D;
