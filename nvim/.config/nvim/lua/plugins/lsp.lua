@@ -15,74 +15,67 @@ return {
 	},
 
 	config = function()
-		require("conform").setup({
+		require("conform").setup({ --formatter
 			formatters_by_ft = {
 			}
 		})
-		local cmp = require('cmp')
-		local cmp_lsp = require("cmp_nvim_lsp")
-		local capabilities = vim.tbl_deep_extend(
-			"force",
-			{},
+		local cmp = require('cmp')          --completion
+		local cmp_lsp = require("cmp_nvim_lsp") --cmp integration with lsp
+		local capabilities = vim.tbl_deep_extend( --combine completion tables of cmp and nvim lsp
+			"force",                        --overwrite from latter
+			{},                             --target
 			vim.lsp.protocol.make_client_capabilities(),
 			cmp_lsp.default_capabilities())
 
-		require("fidget").setup({})
-		require("mason").setup()
-		require("mason-lspconfig").setup({
+		require("fidget").setup({})  --UI bottom right
+		require("mason").setup()     --LSP Package Manager
+		require("mason-lspconfig").setup({ --intall basic required lsps
 			ensure_installed = {
 				"lua_ls",
-				"rust_analyzer",
 				"gopls",
 			},
-			handlers = {
-				function(server_name) -- default handler (optional)
-					require("lspconfig")[server_name].setup {
-						capabilities = capabilities
-					}
-				end,
-
-				zls = function()
-					local lspconfig = require("lspconfig")
-					lspconfig.zls.setup({
-						root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
-						settings = {
-							zls = {
-								enable_inlay_hints = true,
-								enable_snippets = true,
-								warn_style = true,
-							},
-						},
-					})
-					vim.g.zig_fmt_parse_errors = 0
-					vim.g.zig_fmt_autosave = 0
-
-				end,
-				["lua_ls"] = function()
-					local lspconfig = require("lspconfig")
-					lspconfig.lua_ls.setup {
-						capabilities = capabilities,
-						settings = {
-							Lua = {
-								runtime = { version = "Lua 5.1" },
-								diagnostics = {
-									globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
-								}
-							}
-						}
-					}
-				end,
-			}
 		})
 
+		vim.lsp.config("lua_ls", { --configure lua ls
+			capabilities = capabilities,
+			settings = {
+				Lua = {
+					runtime = { version = "Lua 5.1" },
+					diagnostics = { globals = "vim" },
+				}
+			}
+		})
+		vim.lsp.config("clangd", {
+			capabilities = capabilities,
+			cmd = {
+				'clangd',
+				'--background-index',
+				'--compile-commands-dir=build.clang',
+			},
+			root_dir = vim.fs.root(0, { 'sdkconfig', 'CMakeLists.txt', '.git' }),
+		})
+
+		vim.lsp.enable({"clangd","rust_analyzer"})
+		vim.api.nvim_create_autocmd('LspAttach', {
+			group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+			callback = function(ev)
+				local opts = { buffer = ev.buf, silent = true }
+				vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+				vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+				vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+				vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
+				vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+				vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
+				vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
+				vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+					vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+				end, opts)
+				vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action, opts)
+			end,
+		})
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
 		cmp.setup({
-			snippet = {
-				expand = function(args)
-					require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-				end,
-			},
 			mapping = cmp.mapping.preset.insert({
 				['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
 				['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -90,21 +83,17 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 			}),
 			sources = cmp.config.sources({
-				{ name = "copilot", group_index = 2 },
 				{ name = 'nvim_lsp' },
-				{ name = 'luasnip' }, -- For luasnip users.
-			}, {
-					{ name = 'buffer' },
-				})
+				{ name = 'buffer' },
+			})
 		})
 
-		vim.diagnostic.config({
-			-- update_in_insert = true,
+		vim.diagnostic.config({ --config for floating warning/error window
+			--update_in_insert = true,  --realtime warnings while typing
 			float = {
 				focusable = false,
 				style = "minimal",
-				border = "rounded",
-				source = "always",
+				source = "if_many",
 				header = "",
 				prefix = "",
 			},
