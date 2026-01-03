@@ -48,4 +48,4 @@ white = '#d3c6aa'
 
 [window]
   padding = { x = 2, y = 2}
-	opacity = 0.95
+	opacity = 0.9

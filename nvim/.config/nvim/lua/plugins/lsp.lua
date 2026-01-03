@@ -50,9 +50,11 @@ return {
 			cmd = {
 				'clangd',
 				'--background-index',
-				'--compile-commands-dir=build.clang',
+				'--compile-commands-dir=build',
+				'--query-driver=**/*xtensa*,**/*riscv*',
 			},
-			root_dir = vim.fs.root(0, { 'sdkconfig', 'CMakeLists.txt', '.git' }),
+			root_markers = { 'sdkconfig', 'CMakeLists.txt', '.git' },
+			filetypes = { 'c', 'cpp'},
 		})
 
 		vim.lsp.enable({"clangd","rust_analyzer"})
@@ -66,6 +68,7 @@ return {
 				vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
 				vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 				vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
+				vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 				vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
 				vim.keymap.set({ 'n', 'x' }, '<F3>', function()
 					vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
@@ -91,7 +94,7 @@ return {
 		vim.diagnostic.config({ --config for floating warning/error window
 			--update_in_insert = true,  --realtime warnings while typing
 			float = {
-				focusable = false,
+				focusable = true,
 				style = "minimal",
 				source = "if_many",
 				header = "",
