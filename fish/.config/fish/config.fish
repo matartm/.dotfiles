@@ -4,12 +4,19 @@ set -g fish_greeting
 alias e="nvim"
 alias vim="nvim"
 alias view="nvim -R"
+
 alias mountshare="sudo mount -t cifs //10.6.4.242/stuff ~/shareStuff/ -o username=matthias,password=\"qXPMy4w&\""
 
 #alias get_idf=". $HOME/projects/esp/esp-idf55/export.fish"
 keychain --eval --quiet ~/security/ssh/git_ed25519 | source
+
+#keychain --eval ~/.ssh/id_ed25519 | source
 if status is-interactive
     # Commands to run in interactive sessions can go here
+	if not set -q SSH_AUTH_SOCK
+		eval (ssh-agent -c)
+	end
+    ssh-add ~/.ssh/id_ed25519 2>/dev/null
 end
 
 function get_idf
