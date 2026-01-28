@@ -50,8 +50,9 @@ return {
 			cmd = {
 				'clangd',
 				'--background-index',
-				'--compile-commands-dir=build',
+				--'--compile-commands-dir=build',
 				'--query-driver=**/*xtensa*,**/*riscv*',
+				'--log=verbose',
 			},
 			root_markers = { 'sdkconfig', 'CMakeLists.txt', '.git' },
 			filetypes = { 'c', 'cpp'},

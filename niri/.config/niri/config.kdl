@@ -293,6 +293,11 @@ binds {
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
 
+    Mod+Shift+Ctrl+Alt+H     { move-workspace-to-monitor-left; }
+    Mod+Shift+Ctrl+Alt+J     { move-workspace-to-monitor-down; }
+    Mod+Shift+Ctrl+Alt+K     { move-workspace-to-monitor-up; }
+    Mod+Shift+Ctrl+Alt+L     { move-workspace-to-monitor-right; }
+
     Mod+U              { focus-workspace-down; }
     Mod+I              { focus-workspace-up; }
     Mod+SHIFT+U         { move-column-to-workspace-down; }
