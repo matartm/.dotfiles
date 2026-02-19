@@ -4,11 +4,12 @@ set -g fish_greeting
 alias e="nvim"
 alias vim="nvim"
 alias view="nvim -R"
+alias syrsh="virsh -c qemu:///system"
 
 alias mountshare="sudo mount -t cifs //10.6.4.242/stuff ~/shareStuff/ -o username=matthias,password=\"qXPMy4w&\""
 
 #alias get_idf=". $HOME/projects/esp/esp-idf55/export.fish"
-keychain --eval --quiet ~/security/ssh/git_ed25519 | source
+#keychain --eval --quiet ~/security/ssh/git_ed25519 | source
 
 #keychain --eval ~/.ssh/id_ed25519 | source
 if status is-interactive
@@ -28,3 +29,13 @@ function get_idf
 	set -gx IDF_TOOLS_PATH $HOME/.espressif/v$ver
 	source "$HOME/projects/esp/esp-idf$ver/export.fish"
 end
+
+function mount_d
+    sudo cryptsetup open /dev/disk/by-uuid/9d9bb3e9-c8a8-4829-b16b-90c0ae8286fc storage_drive
+    sudo mount /dev/mapper/storage_drive /home/$USER/storage
+end
+function umount_d
+	sudo umount /home/$USER/storage
+    sudo cryptsetup luksClose storage_drive
+end
+
