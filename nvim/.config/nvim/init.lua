@@ -5,3 +5,14 @@ vim.opt.relativenumber = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.scrolloff = 15
+
+vim.filetype.add({
+  extension = {
+    vs = 'glsl',
+    fs = 'glsl',
+    vert = 'glsl',
+    frag = 'glsl',
+    geom = 'glsl',
+    comp = 'glsl',
+  },
+})

@@ -8,7 +8,7 @@
   "dockTransparency": 1,
   "widgetBackgroundColor": "sth",
   "widgetColorMode": "default",
-  "cornerRadius": 5,
+  "cornerRadius": 6,
   "use24HourClock": true,
   "showSeconds": false,
   "useFahrenheit": false,
