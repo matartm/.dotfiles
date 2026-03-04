@@ -4,6 +4,7 @@ set -g fish_greeting
 alias e="nvim"
 alias vim="nvim"
 alias view="nvim -R"
+alias syrsh="virsh -c qemu:///system"
 
 alias mountshare="sudo mount -t cifs //10.6.4.242/stuff ~/shareStuff/ -o username=matthias,password=\"qXPMy4w&\""
 

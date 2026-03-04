@@ -16,6 +16,13 @@ vim.keymap.set("n", "<leader>ec", "<cmd>edit $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader><CR>", "<cmd>lua ReloadConfig()<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>Lazy<CR>")
 
+
+vim.keymap.set('n', '<F5>', ':Continue<CR>', { desc = 'Debug: Continue' })
+vim.keymap.set('n', '<F10>', ':Over<CR>', { desc = 'Debug: Step Over' })
+vim.keymap.set('n', '<F11>', ':Step<CR>', { desc = 'Debug: Step Into' })
+vim.keymap.set('n', '<leader>db', ':Break<CR>', { desc = 'Debug: Toggle Breakpoint' })
+vim.keymap.set('n', '<leader>dc', ':Clear<CR>', { desc = 'Debug: Clear Breakpoint' })
+
 function ReloadConfig()
 	for name,_ in pairs(package.loaded) do
 		local prefix = "config"

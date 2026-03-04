@@ -31,10 +31,9 @@ output "DP-2" {
 	mode "2560x1440@180"
 }
 output "HDMI-A-1"{
-	off
+	scale 1.5
+	mode "2560x1440@180"
 }
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Layout
 layout {
     gaps 6
     center-focused-column "never" //always, never, on-overflow
