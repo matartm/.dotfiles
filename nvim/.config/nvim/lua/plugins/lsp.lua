@@ -34,6 +34,7 @@ return {
 				"lua_ls",
 				"gopls",
 				"tinymist",
+				"glsl-analyzer",
 			},
 		})
 
