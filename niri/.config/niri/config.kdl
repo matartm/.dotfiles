@@ -69,7 +69,7 @@ output "eDP-1" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=1280 y=0
+    //position x=2560 y=0
 }
 
 output "DP-1" {
@@ -80,9 +80,16 @@ output "DP-1" {
 //	mode "2560x1440@180"
 //}
 output "HDMI-A-1"{
-	scale 1.5
-	mode "2560x1440@180"
+	//mode "4096x2160@50"
+	scale 2
+	position x=0 y=0
 }
+gestures{
+	hot-corners {
+		off
+	}
+}
+
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
@@ -202,6 +209,10 @@ window-rule {
 window-rule {
 	match title="funzeln"
 	open-floating true
+}
+window-rule {
+	match app-id="Wfica"
+	open-fullscreen false
 }
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
@@ -374,6 +385,7 @@ binds {
     Mod+Ctrl+M { reset-window-height; }
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
+    Mod+Shift+Alt+F { toggle-windowed-fullscreen; }
 
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
@@ -420,7 +432,10 @@ binds {
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
-    // Applications such as remote-desktop clients and software KVM switches may
+    Mod+Print { 
+        spawn "sh" "-c" "wf-recorder -g \"$(slurp)\" -f ~/Videos/recording_$(date +%Y%m%d_%H%M%S).mp4"; 
+    }
+   // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
     // so they may, for example, forward the key presses as-is to a remote machine.
     // It's a good idea to bind an escape hatch to toggle the inhibitor,

@@ -1,0 +1,9 @@
+{
+  "dankBatteryAlerts": {
+    "enabled": true
+  },
+  "volumeMixer": {
+    "enabled": true,
+    "pillIcon": "volume"
+  }
+}

@@ -33,6 +33,7 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				"gopls",
+				"tinymist",
 			},
 		})
 
@@ -51,10 +52,10 @@ return {
 				'clangd',
 				'--background-index',
 				--'--compile-commands-dir=build',
-				'--query-driver=**/*xtensa*,**/*riscv*',
+				'--query-driver=**xtensa*,**riscv*,/usr/bin/arm-none-eabi-*',
 				'--log=verbose',
 			},
-			root_markers = { 'sdkconfig', 'CMakeLists.txt', '.git' },
+			root_markers = {'.clangd', 'sdkconfig', 'CMakeLists.txt', '.git' },
 			filetypes = { 'c', 'cpp'},
 		})
 
